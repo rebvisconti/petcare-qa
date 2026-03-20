@@ -181,26 +181,28 @@ function entrarEdicao(ag) {
   modoEdicao = true;
   idEmEdicao = ag.id;
 
-  campos.nomePet.value = ag.nomePet;
-  campos.tutor.value = ag.tutor;
+  campos.nomePet.value  = ag.nomePet;
+  campos.tutor.value    = ag.tutor;
   campos.telefone.value = ag.telefone;
-  campos.servico.value = ag.servico;
-  campos.porte.value = ag.porte;
-  campos.data.value = ag.data;
-  campos.horario.value = ag.horario;
-  campos.obs.value = ag.obs || '';
+  campos.servico.value  = ag.servico;
+  campos.porte.value    = ag.porte;
+  campos.data.value     = ag.data;
+  campos.horario.value  = ag.horario;
+  campos.obs.value      = ag.obs || '';
 
+  document.getElementById('titulo-formulario').textContent = 'Editar Agendamento';
   document.getElementById('btn-agendar').textContent = 'Salvar alterações';
-  document.getElementById('cadastro').scrollIntoView({ behavior: 'smooth' });
-  limparErros();
-
   document.getElementById('grupo-status').style.display = 'flex';
   document.getElementById('status').value = ag.status || 'agendado';
+
+  document.getElementById('cadastro').scrollIntoView({ behavior: 'smooth' });
+  limparErros();
 }
 
 function sairEdicao() {
   modoEdicao = false;
   idEmEdicao = null;
+  document.getElementById('titulo-formulario').textContent = 'Novo Agendamento';
   document.getElementById('btn-agendar').textContent = 'Agendar';
   document.getElementById('grupo-status').style.display = 'none';
 }
@@ -218,17 +220,17 @@ function confirmarExclusao(id) {
 function coletarDados() {
   const grupoStatus = document.getElementById('grupo-status');
   return {
-    nomePet:  campos.nomePet.value.trim(),
-    tutor:    campos.tutor.value.trim(),
+    nomePet: campos.nomePet.value.trim(),
+    tutor: campos.tutor.value.trim(),
     telefone: campos.telefone.value.trim(),
-    servico:  campos.servico.value,
-    porte:    campos.porte.value,
-    data:     campos.data.value,
-    horario:  campos.horario.value,
-    obs:      campos.obs.value.trim(),
-    status:   grupoStatus.style.display !== 'none'
-                ? document.getElementById('status').value
-                : undefined,
+    servico: campos.servico.value,
+    porte: campos.porte.value,
+    data: campos.data.value,
+    horario: campos.horario.value,
+    obs: campos.obs.value.trim(),
+    status: grupoStatus.style.display !== 'none'
+      ? document.getElementById('status').value
+      : undefined,
   };
 }
 
