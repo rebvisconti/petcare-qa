@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PetCare — Acesso Administrativo</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/login.css" />
+</head>
+<body class="login-page">
+
+  <div class="login-layout">
+
+    <!-- Painel esquerdo: identidade visual -->
+    <div class="login-brand" aria-hidden="true">
+      <div class="login-brand__inner">
+        <div class="login-brand__logo">🐾</div>
+        <h1 class="login-brand__name">PetCare</h1>
+        <p class="login-brand__tagline">Sistema de Agendamento<br>Banho &amp; Tosa</p>
+        <ul class="login-brand__features">
+          <li>Gestão de agendamentos</li>
+          <li>Cadastro de pets e tutores</li>
+          <li>Controle de horários</li>
+        </ul>
+      </div>
+      <div class="login-brand__deco" aria-hidden="true">🐶🐱✂️🛁</div>
+    </div>
+
+    <!-- Painel direito: formulário -->
+    <div class="login-form-panel">
+      <div class="login-form-wrap">
+
+        <div class="login-form-wrap__header">
+          <h2 class="login-form-wrap__title">Área do administrador</h2>
+          <p class="login-form-wrap__sub">Faça login para acessar o sistema</p>
+        </div>
+
+        <form id="form-login" class="form" novalidate data-testid="form-login">
+
+          <div class="form__group">
+            <label for="login-usuario">Usuário</label>
+            <input
+              type="text"
+              id="login-usuario"
+              name="usuario"
+              data-testid="input-usuario"
+              placeholder="admin"
+              autocomplete="username"
+              autofocus
+            />
+            <span class="form__error" id="erro-usuario" data-testid="erro-usuario"></span>
+          </div>
+
+          <div class="form__group">
+            <label for="login-senha">Senha</label>
+            <div class="input-senha-wrap">
+              <input
+                type="password"
+                id="login-senha"
+                name="senha"
+                data-testid="input-senha"
+                placeholder="••••••••"
+                autocomplete="current-password"
+              />
+              <button
+                type="button"
+                class="btn-ver-senha"
+                id="btn-ver-senha"
+                data-testid="btn-ver-senha"
+                aria-label="Mostrar senha"
+                tabindex="-1"
+              >
+                <span id="icone-senha">👁</span>
+              </button>
+            </div>
+            <span class="form__error" id="erro-senha" data-testid="erro-senha"></span>
+          </div>
+
+          <!-- Mensagem de erro de autenticação -->
+          <div
+            id="mensagem-login"
+            class="mensagem"
+            data-testid="mensagem-login"
+            role="alert"
+            aria-live="polite"
+          ></div>
+
+          <button
+            type="submit"
+            id="btn-entrar"
+            data-testid="btn-entrar"
+            class="btn btn--primary btn--full"
+          >
+            Entrar
+          </button>
+
+          <p class="login-hint" data-testid="login-hint">
+            <strong>Credenciais de teste:</strong> usuário <code>admin</code> · senha <code>petcare123</code>
+          </p>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

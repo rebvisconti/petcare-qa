@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PetCare — Agendamento de Banho & Tosa</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- auth.js carregado antes do body para proteger a rota -->
+  <script src="js/auth.js"></script>
+  <script>Auth.exigirLogin();</script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header__inner">
+      <span class="header__logo">
+        🐾 PetCare
+        <span class="header__logo-sub">Banho &amp; Tosa</span>
+      </span>
+      <nav class="header__nav">
+        <a href="#agendamentos" data-testid="nav-agendamentos">Agendamentos</a>
+        <a href="#cadastro" data-testid="nav-cadastro">+ Novo</a>
+        <span class="header__usuario" data-testid="header-usuario" id="header-usuario"></span>
+        <button
+          class="btn-logout"
+          id="btn-logout"
+          data-testid="btn-logout"
+          type="button"
+          title="Sair do sistema"
+        >Sair</button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="hero">
+    <h1 class="hero__title">Agende com carinho 🐾</h1>
+    <p class="hero__sub">Banho, tosa e muito amor para o seu pet</p>
+  </div>
+
+  <main class="container">
+
+    <!-- ===== SEÇÃO: FORMULÁRIO ===== -->
+    <section id="cadastro" class="section">
+      <h2 class="section__title">Novo Agendamento</h2>
+
+      <form id="form-agendamento" class="form" novalidate>
+
+        <div class="form__group">
+          <label for="nome-pet">Nome do pet *</label>
+          <input
+            type="text"
+            id="nome-pet"
+            name="nome-pet"
+            data-testid="input-nome-pet"
+            placeholder="Ex: Rex"
+            autocomplete="off"
+          />
+          <span class="form__error" id="erro-nome-pet" data-testid="erro-nome-pet"></span>
+        </div>
+
+        <div class="form__group">
+          <label for="tutor">Nome do tutor *</label>
+          <input
+            type="text"
+            id="tutor"
+            name="tutor"
+            data-testid="input-tutor"
+            placeholder="Ex: Ana Lima"
+            autocomplete="off"
+          />
+          <span class="form__error" id="erro-tutor" data-testid="erro-tutor"></span>
+        </div>
+
+        <div class="form__group">
+          <label for="telefone">Telefone *</label>
+          <input
+            type="tel"
+            id="telefone"
+            name="telefone"
+            data-testid="input-telefone"
+            placeholder="Ex: 912345678"
+            autocomplete="off"
+          />
+          <span class="form__error" id="erro-telefone" data-testid="erro-telefone"></span>
+        </div>
+
+        <div class="form__row">
+          <div class="form__group">
+            <label for="servico">Serviço *</label>
+            <select id="servico" name="servico" data-testid="select-servico">
+              <option value="">Selecione...</option>
+              <option value="banho">Banho</option>
+              <option value="tosa">Tosa</option>
+              <option value="banho-tosa">Banho + Tosa</option>
+            </select>
+            <span class="form__error" id="erro-servico" data-testid="erro-servico"></span>
+          </div>
+
+          <div class="form__group">
+            <label for="porte">Porte do pet *</label>
+            <select id="porte" name="porte" data-testid="select-porte">
+              <option value="">Selecione...</option>
+              <option value="pequeno">Pequeno</option>
+              <option value="medio">Médio</option>
+              <option value="grande">Grande</option>
+            </select>
+            <span class="form__error" id="erro-porte" data-testid="erro-porte"></span>
+          </div>
+        </div>
+
+        <div class="form__row">
+          <div class="form__group">
+            <label for="data">Data *</label>
+            <input
+              type="date"
+              id="data"
+              name="data"
+              data-testid="input-data"
+            />
+            <span class="form__error" id="erro-data" data-testid="erro-data"></span>
+          </div>
+
+          <div class="form__group">
+            <label for="horario">Horário *</label>
+            <select id="horario" name="horario" data-testid="select-horario">
+              <option value="">Selecione...</option>
+              <option value="08:00">08:00</option>
+              <option value="09:00">09:00</option>
+              <option value="10:00">10:00</option>
+              <option value="11:00">11:00</option>
+              <option value="14:00">14:00</option>
+              <option value="15:00">15:00</option>
+              <option value="16:00">16:00</option>
+              <option value="17:00">17:00</option>
+            </select>
+            <span class="form__error" id="erro-horario" data-testid="erro-horario"></span>
+          </div>
+        </div>
+
+        <div class="form__group">
+          <label for="observacoes">Observações</label>
+          <textarea
+            id="observacoes"
+            name="observacoes"
+            data-testid="input-observacoes"
+            placeholder="Alergias, comportamento, solicitações especiais..."
+            rows="3"
+          ></textarea>
+        </div>
+
+        <!-- Mensagem global de sucesso/erro -->
+        <div id="mensagem-global" class="mensagem" data-testid="mensagem-global" role="alert" aria-live="polite"></div>
+
+        <div class="form__actions">
+          <button type="button" id="btn-cancelar" data-testid="btn-cancelar" class="btn btn--secondary">
+            Cancelar
+          </button>
+          <button type="submit" id="btn-agendar" data-testid="btn-agendar" class="btn btn--primary">
+            Agendar
+          </button>
+        </div>
+
+      </form>
+    </section>
+
+    <!-- ===== SEÇÃO: LISTA DE AGENDAMENTOS ===== -->
+    <section id="agendamentos" class="section">
+      <div class="section__header">
+        <h2 class="section__title">Agendamentos</h2>
+        <span id="contador" class="badge" data-testid="contador-agendamentos">0 agendamentos</span>
+      </div>
+
+      <!-- Filtros (preparados para as etapas seguintes) -->
+      <div class="filtros">
+        <input
+          type="text"
+          id="busca"
+          data-testid="input-busca"
+          placeholder="Buscar por nome do pet..."
+          class="filtros__busca"
+        />
+        <select id="filtro-status" data-testid="filtro-status" class="filtros__select">
+          <option value="">Todos os status</option>
+          <option value="agendado">Agendado</option>
+          <option value="concluido">Concluído</option>
+          <option value="cancelado">Cancelado</option>
+        </select>
+      </div>
+
+      <!-- Lista dinâmica -->
+      <div id="lista-agendamentos" data-testid="lista-agendamentos" class="lista">
+        <p class="lista__vazia" data-testid="lista-vazia">
+          Nenhum agendamento encontrado. Crie o primeiro acima!
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Template de card de agendamento (clonado via JS) -->
+  <template id="template-card">
+    <article class="card" data-testid="card-agendamento">
+      <div class="card__header">
+        <div>
+          <h3 class="card__pet" data-field="nome-pet"></h3>
+          <p class="card__tutor" data-field="tutor"></p>
+        </div>
+        <span class="card__status badge" data-field="status"></span>
+      </div>
+      <div class="card__body">
+        <span class="card__info" data-field="servico"></span>
+        <span class="card__info" data-field="porte"></span>
+        <span class="card__info" data-field="data-horario"></span>
+        <span class="card__info" data-field="telefone"></span>
+      </div>
+      <p class="card__obs" data-field="observacoes"></p>
+      <div class="card__actions">
+        <button class="btn btn--ghost btn--sm" data-action="editar" data-testid="btn-editar">Editar</button>
+        <button class="btn btn--ghost btn--sm btn--danger" data-action="excluir" data-testid="btn-excluir">Excluir</button>
+      </div>
+    </article>
+  </template>
+
+  <script src="js/storage.js"></script>
+  <script src="js/validacao.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
