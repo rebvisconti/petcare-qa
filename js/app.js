@@ -70,6 +70,7 @@ form.addEventListener('submit', (e) => {
     Storage.atualizar(idEmEdicao, dados);
     exibirMensagem('Agendamento atualizado com sucesso!', 'sucesso');
     sairEdicao();
+    form.reset();
   } else {
     Storage.criar(dados);
     exibirMensagem('Agendamento criado com sucesso!', 'sucesso');
