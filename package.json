@@ -1,11 +1,11 @@
 {
-  "name": "petcare-api",
+  "name": "petcare-qa",
   "version": "1.0.0",
-  "description": "PetCare API — backend para prática de automação de testes",
-  "main": "src/app.js",
+  "description": "PetCare QA — sistema de agendamento para prática de automação de testes",
+  "main": "server.js",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "node --watch src/app.js"
+    "start": "node server.js",
+    "dev": "node --watch server.js"
   },
   "keywords": [],
   "author": "",
