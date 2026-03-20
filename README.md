@@ -22,7 +22,7 @@ Sistema de agendamento de banho e tosa desenvolvido para **prática de automaç�
 
 - **Frontend:** HTML5, CSS3, JavaScript (Vanilla JS), sessionStorage
 - **Backend:** Node.js, Express, CORS, Swagger UI Express, Swagger JSDoc
-- **Hospedagem:** GitHub Pages (frontend estático, sem API)
+- **Hospedagem:** Local via Node.js + Express
 
 ---
 
@@ -32,16 +32,6 @@ Sistema de agendamento de banho e tosa desenvolvido para **prática de automaç�
 |---------|--------------|
 | Usuário | `admin`      |
 | Senha   | `petcare123` |
-
----
-
-## 🌐 Acessar o Frontend (sem instalar nada)
-
-O frontend está no ar e pode ser acessado diretamente pelo navegador — sem API, apenas para explorar a interface:
-
-👉 **https://rebvisconti.github.io/petcare-qa/**
-
-> ⚠️ No GitHub Pages a API não está disponível. Um banner vermelho aparece indicando que o servidor precisa ser iniciado localmente para usar o sistema completo.
 
 ---
 
