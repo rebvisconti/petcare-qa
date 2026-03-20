@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,6 +10,7 @@
   <script src="js/auth.js"></script>
   <script>Auth.exigirLogin();</script>
 </head>
+
 <body>
 
   <header class="header">
@@ -21,13 +23,8 @@
         <a href="#agendamentos" data-testid="nav-agendamentos">Agendamentos</a>
         <a href="#cadastro" data-testid="nav-cadastro">+ Novo</a>
         <span class="header__usuario" data-testid="header-usuario" id="header-usuario"></span>
-        <button
-          class="btn-logout"
-          id="btn-logout"
-          data-testid="btn-logout"
-          type="button"
-          title="Sair do sistema"
-        >Sair</button>
+        <button class="btn-logout" id="btn-logout" data-testid="btn-logout" type="button"
+          title="Sair do sistema">Sair</button>
       </nav>
     </div>
   </header>
@@ -47,40 +44,22 @@
 
         <div class="form__group">
           <label for="nome-pet">Nome do pet *</label>
-          <input
-            type="text"
-            id="nome-pet"
-            name="nome-pet"
-            data-testid="input-nome-pet"
-            placeholder="Ex: Rex"
-            autocomplete="off"
-          />
+          <input type="text" id="nome-pet" name="nome-pet" data-testid="input-nome-pet" placeholder="Ex: Rex"
+            autocomplete="off" />
           <span class="form__error" id="erro-nome-pet" data-testid="erro-nome-pet"></span>
         </div>
 
         <div class="form__group">
           <label for="tutor">Nome do tutor *</label>
-          <input
-            type="text"
-            id="tutor"
-            name="tutor"
-            data-testid="input-tutor"
-            placeholder="Ex: Ana Lima"
-            autocomplete="off"
-          />
+          <input type="text" id="tutor" name="tutor" data-testid="input-tutor" placeholder="Ex: Ana Lima"
+            autocomplete="off" />
           <span class="form__error" id="erro-tutor" data-testid="erro-tutor"></span>
         </div>
 
         <div class="form__group">
           <label for="telefone">Telefone *</label>
-          <input
-            type="tel"
-            id="telefone"
-            name="telefone"
-            data-testid="input-telefone"
-            placeholder="Ex: 912345678"
-            autocomplete="off"
-          />
+          <input type="tel" id="telefone" name="telefone" data-testid="input-telefone" placeholder="Ex: 912345678"
+            autocomplete="off" />
           <span class="form__error" id="erro-telefone" data-testid="erro-telefone"></span>
         </div>
 
@@ -111,12 +90,7 @@
         <div class="form__row">
           <div class="form__group">
             <label for="data">Data *</label>
-            <input
-              type="date"
-              id="data"
-              name="data"
-              data-testid="input-data"
-            />
+            <input type="date" id="data" name="data" data-testid="input-data" />
             <span class="form__error" id="erro-data" data-testid="erro-data"></span>
           </div>
 
@@ -136,16 +110,21 @@
             <span class="form__error" id="erro-horario" data-testid="erro-horario"></span>
           </div>
         </div>
+        
+        <!-- Campo status — só visível na edição -->
+        <div class="form__group" id="grupo-status" style="display:none">
+          <label for="status">Status</label>
+          <select id="status" name="status" data-testid="select-status">
+            <option value="agendado">Agendado</option>
+            <option value="concluido">Concluído</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
 
         <div class="form__group">
           <label for="observacoes">Observações</label>
-          <textarea
-            id="observacoes"
-            name="observacoes"
-            data-testid="input-observacoes"
-            placeholder="Alergias, comportamento, solicitações especiais..."
-            rows="3"
-          ></textarea>
+          <textarea id="observacoes" name="observacoes" data-testid="input-observacoes"
+            placeholder="Alergias, comportamento, solicitações especiais..." rows="3"></textarea>
         </div>
 
         <!-- Mensagem global de sucesso/erro -->
@@ -172,13 +151,8 @@
 
       <!-- Filtros (preparados para as etapas seguintes) -->
       <div class="filtros">
-        <input
-          type="text"
-          id="busca"
-          data-testid="input-busca"
-          placeholder="Buscar por nome do pet..."
-          class="filtros__busca"
-        />
+        <input type="text" id="busca" data-testid="input-busca" placeholder="Buscar por nome do pet..."
+          class="filtros__busca" />
         <select id="filtro-status" data-testid="filtro-status" class="filtros__select">
           <option value="">Todos os status</option>
           <option value="agendado">Agendado</option>
@@ -217,7 +191,8 @@
       <p class="card__obs" data-field="observacoes"></p>
       <div class="card__actions">
         <button class="btn btn--ghost btn--sm" data-action="editar" data-testid="btn-editar">Editar</button>
-        <button class="btn btn--ghost btn--sm btn--danger" data-action="excluir" data-testid="btn-excluir">Excluir</button>
+        <button class="btn btn--ghost btn--sm btn--danger" data-action="excluir"
+          data-testid="btn-excluir">Excluir</button>
       </div>
     </article>
   </template>
@@ -226,4 +201,5 @@
   <script src="js/validacao.js"></script>
   <script src="js/app.js"></script>
 </body>
+
 </html>

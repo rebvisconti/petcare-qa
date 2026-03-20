@@ -1,25 +1,25 @@
 // app.js — Controlador principal da aplicação PetCare
 
 // ===== REFERÊNCIAS DO DOM =====
-const form         = document.getElementById('form-agendamento');
-const btnCancelar  = document.getElementById('btn-cancelar');
-const lista        = document.getElementById('lista-agendamentos');
-const contador     = document.getElementById('contador');
-const mensagem     = document.getElementById('mensagem-global');
-const inputBusca   = document.getElementById('busca');
+const form = document.getElementById('form-agendamento');
+const btnCancelar = document.getElementById('btn-cancelar');
+const lista = document.getElementById('lista-agendamentos');
+const contador = document.getElementById('contador');
+const mensagem = document.getElementById('mensagem-global');
+const inputBusca = document.getElementById('busca');
 const filtroStatus = document.getElementById('filtro-status');
-const template     = document.getElementById('template-card');
+const template = document.getElementById('template-card');
 
 // Campos do formulário
 const campos = {
-  nomePet:  document.getElementById('nome-pet'),
-  tutor:    document.getElementById('tutor'),
+  nomePet: document.getElementById('nome-pet'),
+  tutor: document.getElementById('tutor'),
   telefone: document.getElementById('telefone'),
-  servico:  document.getElementById('servico'),
-  porte:    document.getElementById('porte'),
-  data:     document.getElementById('data'),
-  horario:  document.getElementById('horario'),
-  obs:      document.getElementById('observacoes'),
+  servico: document.getElementById('servico'),
+  porte: document.getElementById('porte'),
+  data: document.getElementById('data'),
+  horario: document.getElementById('horario'),
+  obs: document.getElementById('observacoes'),
 };
 
 // ===== ESTADO =====
@@ -147,8 +147,8 @@ function criarCard(ag) {
   };
   const dataFormatada = ag.data
     ? new Date(ag.data + 'T00:00:00').toLocaleDateString('pt-PT', {
-        day: '2-digit', month: '2-digit', year: 'numeric'
-      })
+      day: '2-digit', month: '2-digit', year: 'numeric'
+    })
     : '—';
 
   card.querySelector('[data-field="nome-pet"]').textContent = ag.nomePet;
@@ -181,24 +181,28 @@ function entrarEdicao(ag) {
   modoEdicao = true;
   idEmEdicao = ag.id;
 
-  campos.nomePet.value  = ag.nomePet;
-  campos.tutor.value    = ag.tutor;
+  campos.nomePet.value = ag.nomePet;
+  campos.tutor.value = ag.tutor;
   campos.telefone.value = ag.telefone;
-  campos.servico.value  = ag.servico;
-  campos.porte.value    = ag.porte;
-  campos.data.value     = ag.data;
-  campos.horario.value  = ag.horario;
-  campos.obs.value      = ag.obs || '';
+  campos.servico.value = ag.servico;
+  campos.porte.value = ag.porte;
+  campos.data.value = ag.data;
+  campos.horario.value = ag.horario;
+  campos.obs.value = ag.obs || '';
 
   document.getElementById('btn-agendar').textContent = 'Salvar alterações';
   document.getElementById('cadastro').scrollIntoView({ behavior: 'smooth' });
   limparErros();
+
+  document.getElementById('grupo-status').style.display = 'flex';
+  document.getElementById('status').value = ag.status || 'agendado';
 }
 
 function sairEdicao() {
   modoEdicao = false;
   idEmEdicao = null;
   document.getElementById('btn-agendar').textContent = 'Agendar';
+  document.getElementById('grupo-status').style.display = 'none';
 }
 
 // ===== EXCLUSÃO =====
@@ -212,6 +216,7 @@ function confirmarExclusao(id) {
 
 // ===== AUXILIARES =====
 function coletarDados() {
+  const grupoStatus = document.getElementById('grupo-status');
   return {
     nomePet:  campos.nomePet.value.trim(),
     tutor:    campos.tutor.value.trim(),
@@ -221,18 +226,21 @@ function coletarDados() {
     data:     campos.data.value,
     horario:  campos.horario.value,
     obs:      campos.obs.value.trim(),
+    status:   grupoStatus.style.display !== 'none'
+                ? document.getElementById('status').value
+                : undefined,
   };
 }
 
 function exibirErros(erros) {
   const mapa = {
-    nomePet:  'erro-nome-pet',
-    tutor:    'erro-tutor',
+    nomePet: 'erro-nome-pet',
+    tutor: 'erro-tutor',
     telefone: 'erro-telefone',
-    servico:  'erro-servico',
-    porte:    'erro-porte',
-    data:     'erro-data',
-    horario:  'erro-horario',
+    servico: 'erro-servico',
+    porte: 'erro-porte',
+    data: 'erro-data',
+    horario: 'erro-horario',
   };
   const camposMapa = {
     nomePet: campos.nomePet, tutor: campos.tutor, telefone: campos.telefone,
