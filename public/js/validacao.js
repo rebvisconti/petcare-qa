@@ -25,6 +25,14 @@ const Validacao = {
     } else if (dados.tutor.trim().length < 3) {
       erros.tutor = 'O nome do tutor deve ter pelo menos 3 caracteres.';
     }
+    
+    if (!dados.tutor || dados.tutor.trim().length === 0) {
+      erros.tutor = 'O nome do tutor é obrigatório.';
+    } else if (dados.tutor.trim().length < 3) {
+      erros.tutor = 'O nome do tutor deve ter pelo menos 3 caracteres.';
+    } else if (dados.tutor.trim().length > 100) {
+      erros.tutor = 'O nome do tutor deve ter no máximo 100 caracteres.';
+    }
 
     // Telefone — aceita 9 a 13 dígitos
     const telefoneNumeros = (dados.telefone || '').replace(/\D/g, '');

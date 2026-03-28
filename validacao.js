@@ -11,9 +11,11 @@ function validarAgendamento(dados, parcial = false) {
   }
 
   if (!parcial || dados.tutor !== undefined) {
-    if (!dados.tutor || dados.tutor.trim().length < 3)
-      erros.push({ campo: 'tutor', mensagem: 'Nome do tutor deve ter pelo menos 3 caracteres.' });
-  }
+  if (!dados.tutor || dados.tutor.trim().length < 3)
+    erros.push({ campo: 'tutor', mensagem: 'Nome do tutor deve ter pelo menos 3 caracteres.' });
+  else if (dados.tutor.trim().length > 100)
+    erros.push({ campo: 'tutor', mensagem: 'Nome do tutor deve ter no máximo 100 caracteres.' });
+}
 
   if (!parcial || dados.telefone !== undefined) {
     const nums = (dados.telefone || '').replace(/\D/g, '');
