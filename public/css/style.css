@@ -292,6 +292,9 @@ body {
   gap: 0.25rem;
 }
 
+.form__error:empty {
+  display: none;
+}
 .form__error:not(:empty)::before {
   content: '!';
   display: inline-flex;
