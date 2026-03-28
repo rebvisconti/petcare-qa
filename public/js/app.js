@@ -2,25 +2,49 @@
 // Versão com integração à API REST
 
 // ===== REFERÊNCIAS DO DOM =====
-const form         = document.getElementById('form-agendamento');
-const btnCancelar  = document.getElementById('btn-cancelar');
-const lista        = document.getElementById('lista-agendamentos');
-const contador     = document.getElementById('contador');
-const mensagem     = document.getElementById('mensagem-global');
-const inputBusca   = document.getElementById('busca');
+const form = document.getElementById('form-agendamento');
+const btnCancelar = document.getElementById('btn-cancelar');
+const lista = document.getElementById('lista-agendamentos');
+const contador = document.getElementById('contador');
+const mensagem = document.getElementById('mensagem-global');
+const inputBusca = document.getElementById('busca');
 const filtroStatus = document.getElementById('filtro-status');
-const template     = document.getElementById('template-card');
+const template = document.getElementById('template-card');
 
 const campos = {
-  nomePet:  document.getElementById('nome-pet'),
-  tutor:    document.getElementById('tutor'),
+  nomePet: document.getElementById('nome-pet'),
+  tutor: document.getElementById('tutor'),
   telefone: document.getElementById('telefone'),
-  servico:  document.getElementById('servico'),
-  porte:    document.getElementById('porte'),
-  data:     document.getElementById('data'),
-  horario:  document.getElementById('horario'),
-  obs:      document.getElementById('observacoes'),
+  servico: document.getElementById('servico'),
+  porte: document.getElementById('porte'),
+  data: document.getElementById('data'),
+  horario: document.getElementById('horario'),
+  obs: document.getElementById('observacoes'),
 };
+
+// ===== LIMPAR ERRO AO DIGITAR =====
+Object.entries(campos).forEach(([nome, el]) => {
+  if (!el) return;
+  ['input', 'change'].forEach(evento => {
+    el.addEventListener(evento, () => {
+      el.classList.remove('input--erro');
+      const mapaErro = {
+        nomePet:  'erro-nome-pet',
+        tutor:    'erro-tutor',
+        telefone: 'erro-telefone',
+        servico:  'erro-servico',
+        porte:    'erro-porte',
+        data:     'erro-data',
+        horario:  'erro-horario',
+      };
+      const idErro = mapaErro[nome];
+      if (idErro) {
+        const errEl = document.getElementById(idErro);
+        if (errEl) errEl.textContent = '';
+      }
+    });
+  });
+});
 
 // ===== ESTADO =====
 let modoEdicao = false;
@@ -132,18 +156,18 @@ btnCancelar.addEventListener('click', () => {
 });
 
 // ===== FILTROS =====
-inputBusca.addEventListener('input',    renderizarLista);
+inputBusca.addEventListener('input', renderizarLista);
 filtroStatus.addEventListener('change', renderizarLista);
 
 // ===== RENDERIZAÇÃO DA LISTA =====
 async function renderizarLista() {
-  const termoBusca  = inputBusca.value.toLowerCase().trim();
+  const termoBusca = inputBusca.value.toLowerCase().trim();
   const statusFiltro = filtroStatus.value;
 
   try {
     let agendamentos = await Storage.listar({
       status: statusFiltro || undefined,
-      pet:    termoBusca   || undefined,
+      pet: termoBusca || undefined,
     });
 
     esconderBannerOffline();
@@ -174,29 +198,29 @@ async function renderizarLista() {
 // ===== CRIAR CARD =====
 function criarCard(ag) {
   const clone = template.content.cloneNode(true);
-  const card  = clone.querySelector('.card');
+  const card = clone.querySelector('.card');
   card.dataset.id = ag.id;
 
   const servicoLabel = { 'banho': 'Banho', 'tosa': 'Tosa', 'banho-tosa': 'Banho + Tosa' };
-  const porteLabel   = { 'pequeno': 'Pequeno', 'medio': 'Médio', 'grande': 'Grande' };
+  const porteLabel = { 'pequeno': 'Pequeno', 'medio': 'Médio', 'grande': 'Grande' };
   const dataFormatada = ag.data
-    ? new Date(ag.data + 'T00:00:00').toLocaleDateString('pt-PT', { day:'2-digit', month:'2-digit', year:'numeric' })
+    ? new Date(ag.data + 'T00:00:00').toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' })
     : '—';
 
-  card.querySelector('[data-field="nome-pet"]').textContent    = ag.nomePet;
-  card.querySelector('[data-field="tutor"]').textContent       = '👤 ' + ag.tutor;
-  card.querySelector('[data-field="servico"]').textContent     = servicoLabel[ag.servico] || ag.servico;
-  card.querySelector('[data-field="porte"]').textContent       = porteLabel[ag.porte]     || ag.porte;
+  card.querySelector('[data-field="nome-pet"]').textContent = ag.nomePet;
+  card.querySelector('[data-field="tutor"]').textContent = '👤 ' + ag.tutor;
+  card.querySelector('[data-field="servico"]').textContent = servicoLabel[ag.servico] || ag.servico;
+  card.querySelector('[data-field="porte"]').textContent = porteLabel[ag.porte] || ag.porte;
   card.querySelector('[data-field="data-horario"]').textContent = `📅 ${dataFormatada} às ${ag.horario}`;
-  card.querySelector('[data-field="telefone"]').textContent    = '📞 ' + ag.telefone;
+  card.querySelector('[data-field="telefone"]').textContent = '📞 ' + ag.telefone;
 
   const statusEl = card.querySelector('[data-field="status"]');
-  statusEl.textContent   = ag.status.charAt(0).toUpperCase() + ag.status.slice(1);
+  statusEl.textContent = ag.status.charAt(0).toUpperCase() + ag.status.slice(1);
   statusEl.dataset.status = ag.status;
 
   const obsEl = card.querySelector('[data-field="observacoes"]');
   if (ag.obs) obsEl.textContent = ag.obs;
-  else        obsEl.remove();
+  else obsEl.remove();
 
   card.querySelector('[data-action="editar"]').addEventListener('click', () => entrarEdicao(ag));
   card.querySelector('[data-action="excluir"]').addEventListener('click', () => confirmarExclusao(ag.id));
@@ -209,19 +233,19 @@ function entrarEdicao(ag) {
   modoEdicao = true;
   idEmEdicao = ag.id;
 
-  campos.nomePet.value  = ag.nomePet;
-  campos.tutor.value    = ag.tutor;
+  campos.nomePet.value = ag.nomePet;
+  campos.tutor.value = ag.tutor;
   campos.telefone.value = ag.telefone;
-  campos.servico.value  = ag.servico;
-  campos.porte.value    = ag.porte;
-  campos.data.value     = ag.data;
-  campos.horario.value  = ag.horario;
-  campos.obs.value      = ag.obs || '';
+  campos.servico.value = ag.servico;
+  campos.porte.value = ag.porte;
+  campos.data.value = ag.data;
+  campos.horario.value = ag.horario;
+  campos.obs.value = ag.obs || '';
 
   document.getElementById('titulo-formulario').textContent = 'Editar Agendamento';
-  document.getElementById('btn-agendar').textContent       = 'Salvar alterações';
-  document.getElementById('grupo-status').style.display   = 'flex';
-  document.getElementById('status').value                  = ag.status || 'agendado';
+  document.getElementById('btn-agendar').textContent = 'Salvar alterações';
+  document.getElementById('grupo-status').style.display = 'flex';
+  document.getElementById('status').value = ag.status || 'agendado';
 
   document.getElementById('cadastro').scrollIntoView({ behavior: 'smooth' });
   limparErros();
@@ -231,8 +255,8 @@ function sairEdicao() {
   modoEdicao = false;
   idEmEdicao = null;
   document.getElementById('titulo-formulario').textContent = 'Novo Agendamento';
-  document.getElementById('btn-agendar').textContent       = 'Agendar';
-  document.getElementById('grupo-status').style.display   = 'none';
+  document.getElementById('btn-agendar').textContent = 'Agendar';
+  document.getElementById('grupo-status').style.display = 'none';
 }
 
 // ===== EXCLUSÃO =====
@@ -251,24 +275,24 @@ async function confirmarExclusao(id) {
 function coletarDados() {
   const grupoStatus = document.getElementById('grupo-status');
   return {
-    nomePet:  campos.nomePet.value.trim(),
-    tutor:    campos.tutor.value.trim(),
+    nomePet: campos.nomePet.value.trim(),
+    tutor: campos.tutor.value.trim(),
     telefone: campos.telefone.value.trim(),
-    servico:  campos.servico.value,
-    porte:    campos.porte.value,
-    data:     campos.data.value,
-    horario:  campos.horario.value,
-    obs:      campos.obs.value.trim(),
-    status:   grupoStatus.style.display !== 'none'
-                ? document.getElementById('status').value
-                : undefined,
+    servico: campos.servico.value,
+    porte: campos.porte.value,
+    data: campos.data.value,
+    horario: campos.horario.value,
+    obs: campos.obs.value.trim(),
+    status: grupoStatus.style.display !== 'none'
+      ? document.getElementById('status').value
+      : undefined,
   };
 }
 
 function exibirErros(erros) {
   const mapa = {
     nomePet: 'erro-nome-pet', tutor: 'erro-tutor', telefone: 'erro-telefone',
-    servico: 'erro-servico',  porte: 'erro-porte', data: 'erro-data', horario: 'erro-horario',
+    servico: 'erro-servico', porte: 'erro-porte', data: 'erro-data', horario: 'erro-horario',
   };
   const camposMapa = {
     nomePet: campos.nomePet, tutor: campos.tutor, telefone: campos.telefone,
@@ -289,11 +313,11 @@ function limparErros() {
 
 function exibirMensagem(texto, tipo) {
   mensagem.textContent = texto;
-  mensagem.className   = `mensagem mensagem--${tipo}`;
+  mensagem.className = `mensagem mensagem--${tipo}`;
   setTimeout(() => ocultarMensagem(), 4000);
 }
 
 function ocultarMensagem() {
   mensagem.textContent = '';
-  mensagem.className   = 'mensagem';
+  mensagem.className = 'mensagem';
 }
