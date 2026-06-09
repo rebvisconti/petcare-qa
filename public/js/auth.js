@@ -24,7 +24,7 @@ const Auth = {
       return { ok: false, campo: 'senha', erro: 'Informe a senha.' };
 
     try {
-      const res = await fetch('/auth/login', {
+      const res = await fetch('http://localhost:3002/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ usuario: usuario.trim(), senha }),
@@ -54,7 +54,7 @@ const Auth = {
       return {
         ok: false,
         campo: 'geral',
-        erro: '⚠️ Não foi possível conectar à API. Verifique se o servidor está rodando em http://localhost:3001',
+        erro: '⚠️ Não foi possível conectar à API. Verifique se o servidor está rodando em http://localhost:3002',
       };
     }
   },

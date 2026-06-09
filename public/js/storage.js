@@ -1,7 +1,7 @@
 // storage.js — Camada de acesso à API REST
 // Substitui o localStorage pelo fetch() para o backend Node.js
 
-const API_URL = '';
+const API_URL = 'http://localhost:3002';
 
 const Storage = {
 
